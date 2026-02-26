@@ -3,7 +3,7 @@ const Cliente = require('../models/Tecnico');
 //Obtener Clientes
 const listarTecnicos = async (req, res) => {
     try {
-        const clientes = await Tecnico.findAll();
+        const tecnicos = await Tecnico.findAll();
         res.json(tecnicos);
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener tecnicos', error: error.message});
@@ -35,7 +35,7 @@ const actualizarTecnico = async (req,res) => {
 const eliminarTecnico = async (req,res) => {
     try {
         const {id} = req.params;
-        await Cliente.destroy({where: {id}});
+        await Tecnico.destroy({where: {id}});
         res.json({ message: "Tecnico eliminado"})
     } catch (error) {
         res.status(500).json({ message: "Error al eliminar el tecnico"})
