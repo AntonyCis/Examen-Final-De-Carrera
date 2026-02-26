@@ -49,3 +49,8 @@ CREATE TABLE matriculas (
     FOREIGN KEY (id_tecnico) REFERENCES tecnicos(id) ON DELETE CASCADE,
     FOREIGN KEY (id_cliente) REFERENCES clientes(id) ON DELETE CASCADE
 );
+
+-- Usuarios
+INSERT INTO usuarios (nombre, apellido, email, password) VALUES 
+('Admin', 'Pruebas', 'admin@test.com', '1234'),
+('Ariel', 'ESFOT', 'ariel@test.com', '1234');
