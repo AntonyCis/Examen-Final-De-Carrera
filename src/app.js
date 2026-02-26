@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 });
 
 // Endpoints
-app.get('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/clientes', clienteRoutes);
 app.use('/api/tecnicos', tecnicoRoutes);
 app.use('/api/tickets', ticketRoutes);
