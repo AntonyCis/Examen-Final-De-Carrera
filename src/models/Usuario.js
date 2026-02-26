@@ -19,4 +19,4 @@ module.exports = db.define('Usuario', {
         type: DataTypes.STRING(20),
         allowNull: false
     }
-}, {tableName: 'usuarios' });
+}, {tableName: 'usuarios', timestamps: false });

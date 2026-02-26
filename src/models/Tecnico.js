@@ -40,4 +40,4 @@ module.exports = db.define('Tecnico', {
         type: DataTypes.STRING(20),
         allowNull: false
     }
-}, {tableName: 'tecnicos' });
+}, {tableName: 'tecnicos', timestamps: false });
