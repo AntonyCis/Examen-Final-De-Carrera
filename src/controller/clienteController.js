@@ -21,7 +21,7 @@ const crearCliente = async (req, res) => {
 };
 
 //Actualizar CLientes
-const actuaizarCliente = async (req,res) => {
+const actualizarCliente = async (req,res) => {
     try{
         const { id } = req.params;
         await Cliente.update(req.body, {where: {id} });
@@ -45,6 +45,6 @@ const eliminarCliente = async (req,res) => {
 module.exports = {
     listarClientes,
     crearCliente,
-    actuaizarCliente,
+    actualizarCliente,
     eliminarCliente
 };
