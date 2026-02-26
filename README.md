@@ -1,3 +1,5 @@
+# Sistema de Tickets de Asistencia Técnica ❤️
+<img width="1003" height="779" alt="image" src="https://github.com/user-attachments/assets/0ef42201-f6bf-4c2c-8c78-c3f4a2aa59b4" />
 
 Esto debe ir en el .env
 ```bash
