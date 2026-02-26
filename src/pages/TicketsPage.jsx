@@ -18,29 +18,42 @@ export default function MatriculasPage() {
   const ENDPOINT = "/tickets";
 
   const loadRelations = async () => {
-    // 1. Cargamos clientes y los convertimos a formato { value, label } para el select
-    const clientes = await fetchBackend("/clientes");
-    if (Array.isArray(clientes)) {
-      setClientesOpts(clientes.map(e => ({ value: e.id, label: `${e.nombre} ${e.apellido}` })));
-    }
+    const [clientes, tecnicos] = await Promise.all([
+      fetchBackend("/clientes"),
+      fetchBackend("/tecnicos")
+    ]);
 
-    // 2. Cargamos tecnicos
-    const tecnicos = await fetchBackend("/tecnicos");
-    if (Array.isArray(tecnicos)) {
-      setTecnicosOpts(tecnicos.map(m => ({ value: m.id, label: `${m.nombre} ${m.apellido}` })));
-    }
+    const cOpts = Array.isArray(clientes) 
+      ? clientes.map(e => ({ value: e.id, label: `${e.nombre} ${e.apellido}` })) 
+      : [];
+    
+    const tOpts = Array.isArray(tecnicos) 
+      ? tecnicos.map(m => ({ value: m.id, label: `${m.nombre} ${m.apellido}` })) 
+      : [];
+
+    setClientesOpts(cOpts);
+    setTecnicosOpts(tOpts);
+
+    return { cOpts, tOpts }; 
   };
 
   useEffect(() => {
-    loadData();
-    loadRelations(); // Cargar las listas al iniciar
+    const init = async () => {
+      // 1. Esperamos a tener las relaciones y las guardamos en variables
+      const { cOpts, tOpts } = await loadRelations();
+      
+      // 2. Le pasamos esas variables a loadData para que cruce los datos correctamente
+      await loadData(cOpts, tOpts);
+    };
+
+    init();
   }, []);
 
   // Columnas de la tabla
   const COLUMNS = [
     { name: "Código", uid: "codigo" }, 
-    { name: "Cliente", uid: "id_cliente" }, 
-    { name: "Técnico", uid: "id_tecnico" },       
+    { name: "Cliente", uid: "cliente_nombre" }, 
+    { name: "Técnico", uid: "tecnico_nombre" },       
     { name: "Descripción", uid: "descripcion" },
     { name: "Acciones", uid: "actions" },
   ];
@@ -64,10 +77,24 @@ export default function MatriculasPage() {
   ];
 
   // --- LÓGICA ESTÁNDAR ---
-  const loadData = async () => {
+  const loadData = async (currentClientes = clientesOpts, currentTecnicos = tecnicosOpts) => {
     setIsLoading(true);
     const result = await fetchBackend(ENDPOINT);
-    if (result) setData(Array.isArray(result) ? result : []);
+
+    if (Array.isArray(result)) {
+      const dataEnriquecida = result.map(ticket => {
+        // Buscamos en los parámetros que pasamos, no en el estado global directamente
+        const cliente = currentClientes.find(c => c.value === ticket.id_cliente);
+        const tecnico = currentTecnicos.find(t => t.value === ticket.id_tecnico);
+
+        return {
+          ...ticket,
+          cliente_nombre: cliente ? cliente.label : "Sin asignar",
+          tecnico_nombre: tecnico ? tecnico.label : "Sin asignar"
+        };
+      });
+      setData(dataEnriquecida);
+    }
     setIsLoading(false);
   };
 
