@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Importamos el plugin de HeroUI que acabamos de crear */
+@plugin "./hero.js";
+
+/* Configuramos la fuente de los estilos de HeroUI */
+/* IMPORTANTE: Esto le dice a Tailwind dónde buscar las clases de HeroUI */
+@source "../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+
+/* Configuración para modo oscuro */
+@custom-variant dark (&:is(.dark *));
