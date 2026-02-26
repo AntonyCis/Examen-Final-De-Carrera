@@ -1,3 +1,4 @@
+const Tecnico = require('../models/Tecnico');
 const Cliente = require('../models/Tecnico');
 
 //Obtener Clientes
@@ -16,6 +17,7 @@ const crearTecnico = async (req, res) => {
         const nuevo = await Tecnico.create(req.body);
         res.status(201).json(nuevo);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Error al crear tecnico", error: error.message});
     }
 };
