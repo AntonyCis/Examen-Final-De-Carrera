@@ -70,7 +70,7 @@ export default function Login() {
           </form>
         </CardBody>
         <CardFooter className="justify-center">
-          <p className="text-xs text-default-400">Credenciales Demo: admin@test.com / 1234</p>
+          <p className="text-xs text-default-400">By. Ariel Macias y Antony Cisneros</p>
         </CardFooter>
       </Card>
     </div>
